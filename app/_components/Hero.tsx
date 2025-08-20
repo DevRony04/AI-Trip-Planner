@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 
 
-const Suggestions = [
+export const Suggestions = [
   {
     title: "Create New Trip",
     icon: <Globe2 className='text-blue-500 h-5 w-5' />
@@ -38,6 +38,7 @@ const onSend = ()=>{
     return;
   }
   // Navigate to Create Trip Plannner Web Page
+  router.push("/create-new-trip")
 }
 
   return (
