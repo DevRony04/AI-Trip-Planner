@@ -5,10 +5,15 @@ import { Button } from '@/components/ui/button'
 import { Loader, Send } from 'lucide-react'
 import axios from 'axios'
 import EmptyBoxState from './EmptyBoxState'
+import GroupSizeUi from './GroupSizeUi'
+import BudgetUi from './BudgetUi'
+import SelectDaysUi from './SelectDaysUi'
+import FinalUi from './FinalUi'
 
 type Message = {
   role: string,
-  content: string
+  content: string,
+  ui?: string
 }
 
 const ChatBox = () => {
@@ -34,17 +39,34 @@ const ChatBox = () => {
     })
     setMessages((prev: Message[]) => [...prev, {
       role: 'assistant',
-      content: result?.data?.resp
+      content: result?.data?.resp,
+      ui: result?.data?.ui
     }])
     console.log(result.data);
     setLoading(false);
 
   }
 
+  const RenderGenerativeUi = (ui: string) => {
+    if (ui == 'budget') {
+      // budget ui component
+      return <BudgetUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
+    } else if (ui == 'groupSize') {
+      // Group size ui 
+      return <GroupSizeUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
+    } else if (ui == 'tripDuration') {
+      // select number of days ui
+      return <SelectDaysUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
+    } else if (ui == 'final') {
+      return <FinalUi viewTrip={() => console.log()} />
+    }
+    return null;
+  }
+
   return (
     <div className='h-[85vh] flex flex-col'>
-      {messages.length==0 &&
-      <EmptyBoxState onSelectOption={(v:string)=>{setUserInput(v); onSend()}}/>
+      {messages.length == 0 &&
+        <EmptyBoxState onSelectOption={(v: string) => { setUserInput(v); onSend() }} />
       }
       {/* Display Messages */}
       <section className='flex-1 overflow-y-auto p-4'>
@@ -58,6 +80,7 @@ const ChatBox = () => {
             <div className='flex justify-start mt-2' key={index}>
               <div className='max-w-lg bg-gray-200 text-black px-4 py-2 rounded-lg'>
                 {msg.content}
+                {RenderGenerativeUi(msg.ui ?? '')}
               </div>
             </div>
         ))}
