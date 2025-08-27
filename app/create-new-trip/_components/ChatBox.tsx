@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Loader, Send } from 'lucide-react'
@@ -9,43 +9,79 @@ import GroupSizeUi from './GroupSizeUi'
 import BudgetUi from './BudgetUi'
 import SelectDaysUi from './SelectDaysUi'
 import FinalUi from './FinalUi'
+import { useMutation } from 'convex/react'
+import { api } from '@/convex/_generated/api'
+import { useUserDetail } from '@/app/provider'
+import { v4 as uuidv4 } from 'uuid';
+
 
 type Message = {
   role: string,
   content: string,
   ui?: string
 }
+export type TripInfo ={
+  budget:string,
+  destination:string,
+  duration:string,
+  group_size:string,
+  origin:string,
+  hotels:any,
+  itinerary:any
+}
 
 const ChatBox = () => {
 
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [userInput, setUserInput] = useState<string>();
-  const [loading, setLoading] = useState(false);
+  const [messages,setMessages] = useState<Message[]>([]);
+  const [userInput,setUserInput] = useState<string>();
+  const [loading,setLoading] = useState(false);
+  const [isFinal,setIsFinal] = useState(false);
+  const [tripDetail,setTripDetail] = useState<TripInfo>();
+  const SaveTripDetail = useMutation(api.tripDetail.CreateTripDetail);
+  const {userDetail,setUserDetail} = useUserDetail();
 
-  const onSend = async () => {
-
-    if (!userInput?.trim()) return;
-
+  const onSend = async () =>{
+    console.log("INSIDE");
+     if (!userInput?.trim()) return;
     setLoading(true);
-    setUserInput('');
-    const newMsg: Message = {
-      role: 'user',
-      content: userInput
+  
+    const newMsg : Message = {
+      role : 'user',
+      content : userInput ?? ''
     }
-    setMessages((prev: Message[]) => [...prev, newMsg])
+    setUserInput('');
+    console.log("HERE");
+    
+      
+    setMessages((prev : Message[])=>[...prev,newMsg])
 
-    const result = await axios.post('/api/aimodel', {
-      messages: [...messages, newMsg]
-    })
-    setMessages((prev: Message[]) => [...prev, {
-      role: 'assistant',
-      content: result?.data?.resp,
-      ui: result?.data?.ui
-    }])
-    console.log(result.data);
+    const result = await axios.post("/api/aimodel",{
+       messages : [...messages,newMsg],
+       isFinal : isFinal
+    });
+    console.log("Trip",result.data);
+
+   !isFinal && setMessages ((prev : Message[]) => [...prev,{
+      role : "assistant",
+      content : result?.data?.resp,
+      ui : result?.data?.ui
+    }]);
+
+    if (isFinal) {
+      setTripDetail(result?.data?.trip_plan);
+      const tripId = uuidv4();
+        await SaveTripDetail({
+        tripDetail : result?.data?.trip_plan,
+        tripId : tripId,
+        uid : userDetail?._id
+      })
+    }
+
     setLoading(false);
-
+    
   }
+
+  
 
   const RenderGenerativeUi = (ui: string) => {
     if (ui == 'budget') {
@@ -58,10 +94,25 @@ const ChatBox = () => {
       // select number of days ui
       return <SelectDaysUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
     } else if (ui == 'final') {
-      return <FinalUi viewTrip={() => console.log()} />
+      return <FinalUi viewTrip={() => console.log()} disable={!tripDetail}/>
     }
     return null;
   }
+
+  useEffect(()=>{
+    const lastMsg = messages[messages.length-1];
+    if (lastMsg?.ui=='final') {
+      setIsFinal(true);
+      setUserInput('ok. great!')
+      // onSend();
+    }
+  },[messages])
+
+  useEffect(()=>{
+      if (isFinal && userInput) {
+        onSend();
+      }
+  },[isFinal])
 
   return (
     <div className='h-[85vh] flex flex-col'>
