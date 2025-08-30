@@ -19,69 +19,105 @@ type Message = {
   role: string,
   content: string,
   ui?: string
-}
-export type TripInfo ={
-  budget:string,
-  destination:string,
-  duration:string,
-  group_size:string,
-  origin:string,
-  hotels:any,
-  itinerary:any
-}
+};
+
+export type TripInfo = {
+  budget: string,
+  destination: string,
+  duration: string,
+  group_size: string,
+  origin: string,
+  hotels: Hotel[],
+  itinerary: Itinerary[]
+};
+
+export type Hotel = {
+  hotel_name: string,
+  hotel_address: string,
+  price_per_night: string,
+  hotel_image_url: string,
+  geo_coordinates: {
+    latitude: number
+    longitude: number
+  },
+  rating: number,
+  description: string
+};
+
+export type Activity = {
+  place_name: string,
+  place_details: string,
+  place_image_url: string,
+  geo_coordinates: {
+    latitude: number,
+    longitude: number
+  },
+  place_address: string,
+  ticket_pricing: string,
+  time_travel_each_location: string,
+  best_time_to_visit: string
+};
+
+type Itinerary = {
+  day : number,
+  day_plan: string,
+  best_time_to_visit_day : string,
+  activities : Activity[]
+};
+
 
 const ChatBox = () => {
 
-  const [messages,setMessages] = useState<Message[]>([]);
-  const [userInput,setUserInput] = useState<string>();
-  const [loading,setLoading] = useState(false);
-  const [isFinal,setIsFinal] = useState(false);
-  const [tripDetail,setTripDetail] = useState<TripInfo>();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [userInput, setUserInput] = useState<string>();
+  const [loading, setLoading] = useState(false);
+  const [isFinal, setIsFinal] = useState(false);
+  const [tripDetail, setTripDetail] = useState<TripInfo>();
   const SaveTripDetail = useMutation(api.tripDetail.CreateTripDetail);
-  const {userDetail,setUserDetail} = useUserDetail();
+  const { userDetail, setUserDetail } = useUserDetail();
 
-  const onSend = async () =>{
+  const onSend = async () => {
     console.log("INSIDE");
-     if (!userInput?.trim()) return;
+    if (!userInput?.trim()) return;
     setLoading(true);
-  
-    const newMsg : Message = {
-      role : 'user',
-      content : userInput ?? ''
+
+    const newMsg: Message = {
+      role: 'user',
+      content: userInput ?? ''
     }
     setUserInput('');
     console.log("HERE");
-    
-      
-    setMessages((prev : Message[])=>[...prev,newMsg])
 
-    const result = await axios.post("/api/aimodel",{
-       messages : [...messages,newMsg],
-       isFinal : isFinal
+
+    setMessages((prev: Message[]) => [...prev, newMsg])
+
+    const result = await axios.post("/api/aimodel", {
+      messages: [...messages, newMsg],
+      isFinal: isFinal
     });
-    console.log("Trip",result.data);
+    console.log("Trip", result.data);
 
-   !isFinal && setMessages ((prev : Message[]) => [...prev,{
-      role : "assistant",
-      content : result?.data?.resp,
-      ui : result?.data?.ui
+    !isFinal && setMessages((prev: Message[]) => [...prev, {
+      role: "assistant",
+      content: result?.data?.resp,
+      ui: result?.data?.ui
     }]);
 
     if (isFinal) {
       setTripDetail(result?.data?.trip_plan);
       const tripId = uuidv4();
-        await SaveTripDetail({
-        tripDetail : result?.data?.trip_plan,
-        tripId : tripId,
-        uid : userDetail?._id
+      await SaveTripDetail({
+        tripDetail: result?.data?.trip_plan,
+        tripId: tripId,
+        uid: userDetail?._id
       })
     }
 
     setLoading(false);
-    
+
   }
 
-  
+
 
   const RenderGenerativeUi = (ui: string) => {
     if (ui == 'budget') {
@@ -94,25 +130,25 @@ const ChatBox = () => {
       // select number of days ui
       return <SelectDaysUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
     } else if (ui == 'final') {
-      return <FinalUi viewTrip={() => console.log()} disable={!tripDetail}/>
+      return <FinalUi viewTrip={() => console.log()} disable={!tripDetail} />
     }
     return null;
   }
 
-  useEffect(()=>{
-    const lastMsg = messages[messages.length-1];
-    if (lastMsg?.ui=='final') {
+  useEffect(() => {
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg?.ui == 'final') {
       setIsFinal(true);
       setUserInput('ok. great!')
       // onSend();
     }
-  },[messages])
+  }, [messages])
 
-  useEffect(()=>{
-      if (isFinal && userInput) {
-        onSend();
-      }
-  },[isFinal])
+  useEffect(() => {
+    if (isFinal && userInput) {
+      onSend();
+    }
+  }, [isFinal])
 
   return (
     <div className='h-[85vh] flex flex-col'>
