@@ -11,7 +11,7 @@ import SelectDaysUi from './SelectDaysUi'
 import FinalUi from './FinalUi'
 import { useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
-import { useUserDetail } from '@/app/provider'
+import { useTripDetail, useUserDetail } from '@/app/provider'
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -75,6 +75,7 @@ const ChatBox = () => {
   const [tripDetail, setTripDetail] = useState<TripInfo>();
   const SaveTripDetail = useMutation(api.tripDetail.CreateTripDetail);
   const { userDetail, setUserDetail } = useUserDetail();
+  const {tripDetailInfo,setTripDetailInfo} = useTripDetail();
 
   const onSend = async () => {
     console.log("INSIDE");
@@ -105,6 +106,8 @@ const ChatBox = () => {
 
     if (isFinal) {
       setTripDetail(result?.data?.trip_plan);
+      setTripDetailInfo(result?.data?.trip_plan);
+      setIsFinal(false);
       const tripId = uuidv4();
       await SaveTripDetail({
         tripDetail: result?.data?.trip_plan,

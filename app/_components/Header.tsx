@@ -30,7 +30,9 @@ const Header = () => {
         {/* logo */}
         <div className='flex items-center gap-2'>
             <Image src="/logo.svg" alt="logo" width={30} height={30} />
+            <Link href={'/'}>
             <h2 className='text-2xl font-bold'>AI Trip Planner</h2>
+            </Link>
         </div>
         {/*Menu-Options*/}
         <div className='flex items-center gap-8'>
