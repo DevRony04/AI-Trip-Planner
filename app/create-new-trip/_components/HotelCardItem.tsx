@@ -33,7 +33,7 @@ const GetGooglePlaceDetail = async () =>{
   return (
     <div className='flex flex-col gap-1'>
                 <Image src={photoUrl?photoUrl:'/placeholder.jpg'} alt='place-image' width={400} height={200}
-                className='rounded-xl shadow object-cover mb-2'
+                className='rounded-xl shadow object-cover mb-2 w-full h-[200px]'
                 />
                 <h2 className='font-semibold text-lg'>{hotel?.hotel_name}</h2>
                 <h2 className='text-gray-700'>{hotel.hotel_address}</h2>

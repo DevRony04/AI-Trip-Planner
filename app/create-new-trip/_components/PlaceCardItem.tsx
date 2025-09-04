@@ -35,7 +35,7 @@ const PlaceCardItem = ({activity}:Props) => {
     return (
         <div>
             <Image src={photoUrl?photoUrl:'/placeholder.jpg'} width={400} height={200} alt={activity.place_name}
-                className='object-cover rounded-xl'
+                className='object-cover rounded-xl w-full h-[200px]'
             />
             <h2 className='font-semibold text-lg'>{activity?.place_name}</h2>
             <p className='text-gray-600 line-clamp-2'>{activity?.place_details}</p>
