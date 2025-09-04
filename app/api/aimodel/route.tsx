@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from 'openai';
+import { aj } from "@/lib/arcjet";
+import { currentUser } from "@clerk/nextjs/server";
+import { auth } from '@clerk/nextjs/server'
 const PROMPT = `You are an AI Trip Planner Agent. Help the user plan a trip by asking EXACTLY one relevant question at a time and progressing only to the NEXT missing field.
 
 Required fields (ask strictly in this order):
-1) Starting location (origin)
-2) Destination city or country
+1) Hey traveler! Where are you starting your journey from? ✈️
+2) And where would you like to go? 🏝️
 3) Group size (Solo, Couple, Family, Friends)
 4) Budget (Low, Medium, High)
 5) Trip duration (number of days)
@@ -117,6 +120,21 @@ Output Schema:
   `
   export async function POST(req: NextRequest) {
     const { messages, isFinal } = await req.json();
+    const user = await currentUser();
+    const {has} =await auth();
+    const hasPremiumAccess = has({ plan: 'monthly' })
+    console.log("hasPremiumAccess", hasPremiumAccess);
+    const decision = await aj.protect(req, { userId:user?.primaryEmailAddress?.emailAddress??'', requested: isFinal? 5 : 0 }); // Deduct 5 tokens from the bucket
+
+    // Show limit message if Arcjet denies and user is not premium
+    //@ts-ignore
+    if (decision?.reason?.remaining==0 && !hasPremiumAccess) {
+      return NextResponse.json({
+        resp: "No Free Credit Remaining",
+        ui: "limit"
+      })
+    }
+    
   
     try {
       const apiKey = process.env.GEMINI_API_KEY;
@@ -124,7 +142,7 @@ Output Schema:
         return NextResponse.json({ error: "Missing GEMINI_API_KEY" }, { status: 500 });
       }
   
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
   
       const history = (messages || []).map((m: { role: string; content: string }) => ({
         role: m.role === 'assistant' ? 'model' : 'user',

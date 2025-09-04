@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { SignInButton, useUser } from '@clerk/nextjs'
+import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
 
 const Header = () => {
 
@@ -43,12 +43,15 @@ const Header = () => {
             ))}
         </div>
         {/* Get Started Button */}
+        <div className='flex items-center gap-5'>
        {!user ? <SignInButton mode='modal'>
         <Button>Get Started</Button>
         </SignInButton>:
         <Link href={'/create-new-trip'}>
         <Button>Create New Trip</Button>
         </Link>}
+        <UserButton/>
+        </div>
     </div>
   )
 }
