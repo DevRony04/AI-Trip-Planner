@@ -74,7 +74,7 @@ const onSend = ()=>{
         <HeroVideoDialog
           className="block dark:hidden"
           animationStyle="from-center"
-          videoSrc="https://www.example.com/dummy-video"
+          videoSrc="https://www.youtube.com/embed/F02_MVdAqCk"
           thumbnailSrc="https://mma.prnewswire.com/media/2401528/1_MindtripProduct.jpg?p=facebook"
           thumbnailAlt="Dummy Video Thumbnail"
         />
