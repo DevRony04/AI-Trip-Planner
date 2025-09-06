@@ -69,7 +69,7 @@ npm run dev
 └── ...
 
 ## 🚀 Deployment :->
-vercel
+vercel :- https://ai-trip-planner-blush.vercel.app
 
 ## 📜 License :->
 This project is licensed under the MIT License.
