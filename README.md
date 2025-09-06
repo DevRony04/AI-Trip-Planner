@@ -33,15 +33,15 @@ Create, visualize, and manage custom itineraries with an AI assistant and intera
 
 ## ⚡ Getting Started
 
-### 1. Clone the repository
-```bash
+## 1. Clone the repository
+-bash
 git clone https://github.com/DevRony04/AI-Trip-Planner.git
 cd AI-Trip-Planner
 
-2. Install dependencies :->
+## 2. Install dependencies :->
 npm install
 
-3. Configure environment variables :->
+## 3. Configure environment variables :->
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token
@@ -50,7 +50,7 @@ OPENAI_API_KEY=your_openai_key
 4. Start the development server :->
 npm run dev
 
-📂 Project Structure
+## 📂 Project Structure
 ├── app/
 │   ├── layout.tsx         # Global layout with Header & Footer
 │   ├── page.tsx           # Landing page
@@ -65,12 +65,12 @@ npm run dev
 │   └── screenshots/       # App screenshots
 └── ...
 
-🚀 Deployment :->
+## 🚀 Deployment :->
 vercel
 
-📜 License :->
+## 📜 License :->
 This project is licensed under the MIT License.
 
-🙌 Acknowledgements
+## 🙌 Acknowledgements
 > Inspired by Travel Hobby.
 > Thanks to Clerk,Mapbox,OpenAI and Gemini For their APIs.
