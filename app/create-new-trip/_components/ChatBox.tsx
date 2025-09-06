@@ -58,7 +58,7 @@ export type Activity = {
   best_time_to_visit: string
 };
 
-type Itinerary = {
+export type Itinerary = {
   day : number,
   day_plan: string,
   best_time_to_visit_day : string,
@@ -183,16 +183,28 @@ const ChatBox = () => {
       </section>
       {/* User Input */}
       <section>
-        <div className='border border-gray-300 rounded-2xl p-4 relative'>
-          <Textarea placeholder='Start Typing Here...'
-            className='w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none'
-            onChange={(event) => setUserInput(event.target.value)}
-            value={userInput} />
-          <Button size={'icon'} className='absolute bottom-6 right-6' onClick={() => onSend()}>
-            <Send className='h-4 w-4' />
-          </Button>
-        </div>
-      </section>
+  <div className="border border-gray-300 rounded-2xl p-4 relative">
+    <Textarea
+      placeholder="Start Typing Here..."
+      className="w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none"
+      onChange={(event) => setUserInput(event.target.value)}
+      value={userInput}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault(); // stop newline
+          onSend();
+        }
+      }}
+    />
+    <Button
+      size={"icon"}
+      className="absolute bottom-6 right-6"
+      onClick={() => onSend()}
+    >
+      <Send className="h-4 w-4" />
+    </Button>
+  </div>
+</section>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { useConvex } from 'convex/react';
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useTripDetail } from '@/app/provider';
+import GlobalMap from '@/app/create-new-trip/_components/GlobalMap';
 
 const ViewTrip = () => {
 
@@ -32,8 +33,14 @@ const GetTrip=async()=>{
 }
 
   return (
-    <div>
+    <div className='grid grid-cols-5'>
+      <div className='col-span-3'>
       <Itinerary/>
+      </div>
+      <div className='col-span-2'>
+        <GlobalMap/>
+      </div>
+      
     </div>
   )
 }

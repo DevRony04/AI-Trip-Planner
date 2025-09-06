@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexClientProvider } from "./ConvexClientProvider";
+import Footer from "./_components/Footer";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
           className={`${outfit.variable} antialiased`}
         >
           <ConvexClientProvider>{children}</ConvexClientProvider>
+          <Footer/>
         </body>
       </html>
     </ClerkProvider>
