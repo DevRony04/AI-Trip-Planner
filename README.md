@@ -1,7 +1,7 @@
 # ✈️ AI Trip Planner
 
-AI Trip Planner is a next-generation AI-powered travel planning platform built with Next.js 14, Tailwind CSS, Clerk Authentication, and Mapbox.
-It enables users to generate personalized itineraries, explore destinations on interactive maps, and manage trips seamlessly — all within a modern, secure, and fully responsive web application.
+An **AI-powered travel planning web application** built with **Next.js 14, Tailwind CSS, Clerk Authentication, and Mapbox**.  
+Create, visualize, and manage custom itineraries with an AI assistant and interactive maps — all in a modern, responsive interface.
 ---
 
 ## 🚀 Features
@@ -42,10 +42,10 @@ cd AI-Trip-Planner
 npm install
 
 ## 3. Configure environment variables :->
-**NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-**CLERK_SECRET_KEY=your_clerk_secret_key
-**NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token
-**OPENAI_API_KEY=your_openai_key
+- **NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+- **CLERK_SECRET_KEY=your_clerk_secret_key
+- **NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token
+- **OPENAI_API_KEY=your_openai_key
 
 4. Start the development server :->
 npm run dev
@@ -72,5 +72,5 @@ vercel
 This project is licensed under the MIT License.
 
 ## 🙌 Acknowledgements :->
-**Inspired by Travel Hobby.
-**Thanks to Clerk,Mapbox,OpenAI and Gemini For their APIs.
+- **Inspired by Travel Hobby.
+- **Thanks to Clerk,Mapbox,OpenAI and Gemini For their APIs.
