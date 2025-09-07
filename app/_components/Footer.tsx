@@ -1,4 +1,4 @@
-import { Mail, Twitter, Github, Linkedin, Instagram } from "lucide-react";
+import { Mail, Twitter, Linkedin, Instagram, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -22,11 +22,11 @@ export default function Footer() {
             <a href="https://twitter.com/" target="_blank" className="hover:text-orange-600">
               <Twitter size={22} />
             </a>
-            <a href="https://github.com/" target="_blank" className="hover:text-orange-600">
-              <Github size={22} />
-            </a>
             <a href="https://linkedin.com/" target="_blank" className="hover:text-orange-600">
               <Linkedin size={22} />
+            </a>
+            <a href="https://facebook.com/" target="_blank" className="hover:text-orange-600">
+              <Facebook size={22} />
             </a>
             <a href="https://instagram.com/" className="hover:text-orange-600">
               <Instagram size={22} />
