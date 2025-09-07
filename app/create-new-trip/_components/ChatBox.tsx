@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Loader, Send } from 'lucide-react'
@@ -13,7 +13,7 @@ import { useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { useTripDetail, useUserDetail } from '@/app/provider'
 import { v4 as uuidv4 } from 'uuid';
-
+import { useRouter } from 'next/navigation'   // ✅ added for navigation
 
 type Message = {
   role: string,
@@ -28,7 +28,8 @@ export type TripInfo = {
   group_size: string,
   origin: string,
   hotels: Hotel[],
-  itinerary: Itinerary[]
+  itinerary: Itinerary[],
+  tripId?: string   // ✅ added tripId so we can redirect
 };
 
 export type Hotel = {
@@ -59,44 +60,35 @@ export type Activity = {
 };
 
 export type Itinerary = {
-  day : number,
+  day: number,
   day_plan: string,
-  best_time_to_visit_day : string,
-  activities : Activity[]
+  best_time_to_visit_day: string,
+  activities: Activity[]
 };
 
-
 const ChatBox = () => {
-
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [isFinal, setIsFinal] = useState(false);
   const [tripDetail, setTripDetail] = useState<TripInfo>();
   const SaveTripDetail = useMutation(api.tripDetail.CreateTripDetail);
-  const { userDetail, setUserDetail } = useUserDetail();
-  const {tripDetailInfo,setTripDetailInfo} = useTripDetail();
+  const { userDetail } = useUserDetail();
+  const { setTripDetailInfo } = useTripDetail();
+  const router = useRouter();  // ✅ for navigation
 
   const onSend = async () => {
-    console.log("INSIDE");
     if (!userInput?.trim()) return;
     setLoading(true);
 
-    const newMsg: Message = {
-      role: 'user',
-      content: userInput ?? ''
-    }
+    const newMsg: Message = { role: 'user', content: userInput ?? '' }
     setUserInput('');
-    console.log("HERE");
-
-
     setMessages((prev: Message[]) => [...prev, newMsg])
 
     const result = await axios.post("/api/aimodel", {
       messages: [...messages, newMsg],
       isFinal: isFinal
     });
-    console.log("Trip", result.data);
 
     !isFinal && setMessages((prev: Message[]) => [...prev, {
       role: "assistant",
@@ -105,35 +97,40 @@ const ChatBox = () => {
     }]);
 
     if (isFinal) {
-      setTripDetail(result?.data?.trip_plan);
-      setTripDetailInfo(result?.data?.trip_plan);
-      setIsFinal(false);
       const tripId = uuidv4();
+      const newTrip = { ...result?.data?.trip_plan, tripId };
+
+      setTripDetail(newTrip);
+      setTripDetailInfo(newTrip);
+      setIsFinal(false);
+
       await SaveTripDetail({
         tripDetail: result?.data?.trip_plan,
         tripId: tripId,
         uid: userDetail?._id
-      })
+      });
     }
 
     setLoading(false);
-
   }
-
-
 
   const RenderGenerativeUi = (ui: string) => {
     if (ui == 'budget') {
-      // budget ui component
       return <BudgetUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
     } else if (ui == 'groupSize') {
-      // Group size ui 
       return <GroupSizeUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
     } else if (ui == 'tripDuration') {
-      // select number of days ui
       return <SelectDaysUi onSelectedOption={(v: string) => { setUserInput(v); onSend() }} />;
     } else if (ui == 'final') {
-      return <FinalUi viewTrip={() => console.log()} disable={!tripDetail} />
+      return (
+        <FinalUi
+          viewTrip={() => {
+            if (!tripDetail?.tripId) return;
+            router.push(`/view-trip/${tripDetail.tripId}`);  // ✅ navigate to view trip page
+          }}
+          disable={!tripDetail}
+        />
+      );
     }
     return null;
   }
@@ -143,7 +140,6 @@ const ChatBox = () => {
     if (lastMsg?.ui == 'final') {
       setIsFinal(true);
       setUserInput('ok. great!')
-      // onSend();
     }
   }, [messages])
 
@@ -161,50 +157,53 @@ const ChatBox = () => {
       {/* Display Messages */}
       <section className='flex-1 overflow-y-auto p-4'>
         {messages.map((msg: Message, index) => (
-          msg.role == 'user' ?
+          msg.role == 'user' ? (
             <div className='flex justify-end mt-2' key={index}>
               <div className='max-w-lg bg-primary text-white px-4 py-2 rounded-lg'>
                 {msg.content}
               </div>
-            </div> :
+            </div>
+          ) : (
             <div className='flex justify-start mt-2' key={index}>
               <div className='max-w-lg bg-gray-200 text-black px-4 py-2 rounded-lg'>
                 {msg.content}
                 {RenderGenerativeUi(msg.ui ?? '')}
               </div>
             </div>
+          )
         ))}
-        {loading && <div className='flex justify-start mt-2'>
-          <div className='max-w-lg bg-gray-200 text-black px-4 py-2 rounded-lg'>
-            <Loader className='animate-spin' />
+        {loading && (
+          <div className='flex justify-start mt-2'>
+            <div className='max-w-lg bg-gray-200 text-black px-4 py-2 rounded-lg'>
+              <Loader className='animate-spin' />
+            </div>
           </div>
-        </div>
-        }
+        )}
       </section>
       {/* User Input */}
       <section>
-  <div className="border border-gray-300 rounded-2xl p-4 relative">
-    <Textarea
-      placeholder="Start Typing Here..."
-      className="w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none"
-      onChange={(event) => setUserInput(event.target.value)}
-      value={userInput}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" && !event.shiftKey) {
-          event.preventDefault(); // stop newline
-          onSend();
-        }
-      }}
-    />
-    <Button
-      size={"icon"}
-      className="absolute bottom-6 right-6"
-      onClick={() => onSend()}
-    >
-      <Send className="h-4 w-4" />
-    </Button>
-  </div>
-</section>
+        <div className="border border-gray-300 rounded-2xl p-4 relative">
+          <Textarea
+            placeholder="Start Typing Here..."
+            className="w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none"
+            onChange={(event) => setUserInput(event.target.value)}
+            value={userInput}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                onSend();
+              }
+            }}
+          />
+          <Button
+            size={"icon"}
+            className="absolute bottom-6 right-6"
+            onClick={() => onSend()}
+          >
+            <Send className="h-4 w-4" />
+          </Button>
+        </div>
+      </section>
     </div>
   )
 }
