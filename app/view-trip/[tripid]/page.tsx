@@ -10,37 +10,37 @@ import { useTripDetail } from '@/app/provider';
 import GlobalMap from '@/app/create-new-trip/_components/GlobalMap';
 
 const ViewTrip = () => {
+  const { tripid } = useParams();
+  const { userDetail, setUserDetail } = useUserDetail();
+  const convex = useConvex();
+  const [tripData, setTripData] = useState<Trip>();
+  const { setTripDetailInfo } = useTripDetail();
 
-const {tripid} = useParams();
-const {userDetail,setUserDetail} = useUserDetail();
-const convex = useConvex();
-const [tripData,setTripData] = useState<Trip>();
-const {tripDetailInfo,setTripDetailInfo} = useTripDetail();
+  useEffect(() => {
+    userDetail && GetTrip();
+  }, [userDetail]);
 
-useEffect(()=>{
-   userDetail && GetTrip();
-},[userDetail])
-
-const GetTrip=async()=>{
-    const result = await convex.query(api.tripDetail.GetTripById,{
-        uid : userDetail?._id,
-        tripid : tripid + ''
-    })
+  const GetTrip = async () => {
+    const result = await convex.query(api.tripDetail.GetTripById, {
+      uid: userDetail?._id,
+      tripid: tripid + ''
+    });
     console.log(result);
     setTripData(result);
     setTripDetailInfo(result?.tripDetail);
-    
-}
+  };
 
   return (
-    <div className='grid grid-cols-5'>
-      <div className='col-span-3'>
-      <Itinerary/>
+    <div className='grid grid-cols-1 lg:grid-cols-5 gap-4 p-4 sm:p-6 md:p-8'>
+      {/* Itinerary Section */}
+      <div className='lg:col-span-3 order-2 lg:order-1'>
+        <Itinerary />
       </div>
-      <div className='col-span-2'>
-        <GlobalMap/>
+
+      {/* Map Section */}
+      <div className='lg:col-span-2 order-1 lg:order-2'>
+        <GlobalMap />
       </div>
-      
     </div>
   )
 }

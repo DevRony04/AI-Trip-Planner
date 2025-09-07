@@ -2,7 +2,7 @@ import { Mail, Twitter, Github, Linkedin, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-orange-100 border-t">
+    <footer className="bg-orange-200 border-t">
       <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Brand */}
