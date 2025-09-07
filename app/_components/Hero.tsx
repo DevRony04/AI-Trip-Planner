@@ -55,7 +55,7 @@ const Hero = () => {
         <div>
           <div className='border rounded-2xl p-3 sm:p-4 relative'>
             <Textarea
-              placeholder='Create a trip for Paris from New York'
+              placeholder='Plan a 7-day trip from New York to Paris with Approximate Budget'
               className='w-full h-24 sm:h-28 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none text-sm sm:text-base'
             />
             <Button

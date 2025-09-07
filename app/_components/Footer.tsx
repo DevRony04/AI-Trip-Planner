@@ -43,7 +43,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t py-4 text-center text-md text-black bg-gray-50">
-        © {new Date().getFullYear()} AI Trip Planner · All rights reserved.
+        © {new Date().getFullYear()} AI Trip Planner - All rights reserved.
       </div>
     </footer>
   );
