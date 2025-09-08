@@ -45,28 +45,31 @@ cd AI-Trip-Planner
 npm install
 
 ## 3. Configure environment variables :->
-- **NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-- **CLERK_SECRET_KEY=your_clerk_secret_key
-- **NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token
-- **OPENAI_API_KEY=your_openai_key
+- NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+- CLERK_SECRET_KEY=your_clerk_secret_key
+- NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token
+- OPENAI_API_KEY=your_openai_key
 
 4. Start the development server :->
 npm run dev
 
 ## 📂 Project Structure :->
-├── app/
-│   ├── layout.tsx         # Global layout with Header & Footer
-│   ├── page.tsx           # Landing page
-│   ├── create-new-trip/   # Trip creation workflow
-│   └── my-trips/          # Saved trips
-├── components/
-│   ├── Header.tsx         # Navigation bar
-│   ├── Footer.tsx         # Footer
-│   └── ui/                # Reusable UI components
-├── public/
-│   ├── logo.svg
-│   └── screenshots/       # App screenshots
-└── ...
+- ├── app/ # Next.js application routes & pages
+- ├── components/ # Reusable UI components
+- ├── context/ # React Context providers (global state management)
+- ├── convex/ # Convex backend functions (real-time, serverless)
+- ├── hooks/ # Custom React hooks
+- ├── lib/ # Utility functions, helpers, configurations
+- ├── public/ # Static assets (images, icons, fonts, etc.)
+│
+- ├── .gitignore # Git ignore rules
+- ├── README.md # Project documentation
+- ├── components.json # Shadcn UI component registry
+- ├── middleware.ts # Next.js middleware (auth, routing, logging, etc.)
+- ├── next.config.ts # Next.js configuration file
+- ├── package.json # Project dependencies & scripts
+- ├── package-lock.json # Lockfile for dependencies
+- ├── postcss.config.mjs # PostCSS configuration
 
 ## 🚀 Deployment :->
 vercel :- https://ai-trip-planner-blush.vercel.app
@@ -75,5 +78,5 @@ vercel :- https://ai-trip-planner-blush.vercel.app
 This project is licensed under the MIT License.
 
 ## 🙌 Acknowledgements :->
-- **Inspired by Travel Hobby.
-- **Thanks to Clerk,Mapbox,OpenAI and Gemini For their APIs.
+- Inspired by Travel Hobby.
+- Thanks to Clerk,Mapbox,OpenAI and Gemini For their APIs.
