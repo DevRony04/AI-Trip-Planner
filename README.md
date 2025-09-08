@@ -50,7 +50,7 @@ npm install
 - NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token
 - OPENAI_API_KEY=your_openai_key
 
-4. Start the development server :->
+## 4. Start the development server :->
 npm run dev
 
 ## 📂 Project Structure :->
