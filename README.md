@@ -18,12 +18,12 @@ Create, visualize, and manage custom itineraries with an **AI assistant** and **
 - 🎨 **Modern Design** – Styled with Tailwind CSS + Shadcn UI  
 
 ---
-# 🖼 Screenshots 
+# 🖼 Screenshots :->
 
 <img width="1821" height="844" alt="Screenshot 2025-09-06 125029" src="https://github.com/user-attachments/assets/3194fe7c-f3c2-48fe-b8e6-4ebeecfae8c3" />
 
 
-## 🛠 Tech Stack
+## 🛠 Tech Stack :->
 
 - **Framework**: [Next.js 14](https://nextjs.org/) (App Router)  
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Shadcn UI](https://ui.shadcn.com/)  
@@ -36,7 +36,7 @@ Create, visualize, and manage custom itineraries with an **AI assistant** and **
 
 ## ⚡ Getting Started
 
-## 1. Clone the repository
+## 1. Clone the repository :->
 -bash
 git clone https://github.com/DevRony04/AI-Trip-Planner.git
 cd AI-Trip-Planner
