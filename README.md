@@ -56,7 +56,7 @@ npm run dev
 ## 📂 Project Structure :->
 - AI-Trip-Planner/
 - │
-- ├── backend/
+-├── backend/
 - │   ├── app/                # Main backend application code (e.g., FastAPI, Flask, Django)
 - │   │   ├── __init__.py
 - │   │   ├── api/            # API endpoint definitions (routes/controllers)
