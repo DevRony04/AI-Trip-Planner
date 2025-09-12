@@ -55,40 +55,23 @@ npm run dev
 
 ## 📂 Project Structure :->
 - AI-Trip-Planner/
-- │
-- ├── backend/
-- │   ├── app/                # Main backend application code (e.g., FastAPI, Flask, Django)
-- │   │   ├── __init__.py
-- │   │   ├── api/            # API endpoint definitions (routes/controllers)
-- │   │   ├── models/         # Database and Pydantic models
-- │   │   ├── services/       # Business logic, ML integration
-- │   │   └── utils/          # Helper functions
-- │   ├── tests/              # Backend unit and integration tests
-- │   ├── requirements.txt    # Python dependencies
-- │   └── README.md
-- │
-- ├── frontend/
-- │   ├── public/
-- │   ├── src/
-- │   │   ├── components/     # Reusable React components
-- │   │   ├── pages/          # Top-level React pages
-- │   │   ├── utils/          # Frontend helper functions
-- │   │   └── styles/         # CSS/SCSS files
-- │   ├── tests/              # Frontend tests
-- │   ├── package.json        # Frontend dependencies
-- │   └── README.md
-- │
-- ├── ai/
-- │   ├── models/             # Trained models, checkpoints, etc.
-- │   ├── notebooks/          # Jupyter notebooks for experiments
-- │   ├── scripts/            # Training, evaluation, and inference scripts
-- │   └── data/               # Raw and processed datasets
-- │
-- ├── docs/                   # Documentation, architecture diagrams
-- ├── .github/                # GitHub workflows, issue templates, etc.
+- ├── app/
+- ├── components/
+- ├── context/
+- ├── convex/
+- ├── hooks/
+- ├── lib/
+- ├── public/
 - ├── .gitignore
-- ├── docker-compose.yml      # For multi-container orchestration
-- └── README.md               # Project overview
+- ├── README.md
+- ├── components.json
+- ├── middleware.ts
+- ├── next.config.ts
+- ├── package-lock.json
+- ├── package.json
+- ├── postcss.config.mjs
+- ├── tsconfig.json
+- ├── README.md
 
 ## 🚀 Deployment :->
 vercel :- https://ai-trip-planner-blush.vercel.app
