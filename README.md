@@ -54,22 +54,41 @@ npm install
 npm run dev
 
 ## 📂 Project Structure :->
-- ├── app/ # Next.js application routes & pages
-- ├── components/ # Reusable UI components
-- ├── context/ # React Context providers (global state management)
-- ├── convex/ # Convex backend functions (real-time, serverless)
-- ├── hooks/ # Custom React hooks
-- ├── lib/ # Utility functions, helpers, configurations
-- ├── public/ # Static assets (images, icons, fonts, etc.)
+AI-Trip-Planner/
 │
-- ├── .gitignore # Git ignore rules
-- ├── README.md # Project documentation
-- ├── components.json # Shadcn UI component registry
-- ├── middleware.ts # Next.js middleware (auth, routing, logging, etc.)
-- ├── next.config.ts # Next.js configuration file
-- ├── package.json # Project dependencies & scripts
-- ├── package-lock.json # Lockfile for dependencies
-- ├── postcss.config.mjs # PostCSS configuration
+├── backend/
+│   ├── app/                # Main backend application code (e.g., FastAPI, Flask, Django)
+│   │   ├── __init__.py
+│   │   ├── api/            # API endpoint definitions (routes/controllers)
+│   │   ├── models/         # Database and Pydantic models
+│   │   ├── services/       # Business logic, ML integration
+│   │   └── utils/          # Helper functions
+│   ├── tests/              # Backend unit and integration tests
+│   ├── requirements.txt    # Python dependencies
+│   └── README.md
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/     # Reusable React components
+│   │   ├── pages/          # Top-level React pages
+│   │   ├── utils/          # Frontend helper functions
+│   │   └── styles/         # CSS/SCSS files
+│   ├── tests/              # Frontend tests
+│   ├── package.json        # Frontend dependencies
+│   └── README.md
+│
+├── ai/
+│   ├── models/             # Trained models, checkpoints, etc.
+│   ├── notebooks/          # Jupyter notebooks for experiments
+│   ├── scripts/            # Training, evaluation, and inference scripts
+│   └── data/               # Raw and processed datasets
+│
+├── docs/                   # Documentation, architecture diagrams
+├── .github/                # GitHub workflows, issue templates, etc.
+├── .gitignore
+├── docker-compose.yml      # For multi-container orchestration
+└── README.md               # Project overview
 
 ## 🚀 Deployment :->
 vercel :- https://ai-trip-planner-blush.vercel.app
