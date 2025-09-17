@@ -54,22 +54,24 @@ npm install
 npm run dev
 
 ## 📂 Project Structure :->
-- ├── app/ # Next.js application routes & pages
-- ├── components/ # Reusable UI components
-- ├── context/ # React Context providers (global state management)
-- ├── convex/ # Convex backend functions (real-time, serverless)
-- ├── hooks/ # Custom React hooks
-- ├── lib/ # Utility functions, helpers, configurations
-- ├── public/ # Static assets (images, icons, fonts, etc.)
-│
-- ├── .gitignore # Git ignore rules
-- ├── README.md # Project documentation
-- ├── components.json # Shadcn UI component registry
-- ├── middleware.ts # Next.js middleware (auth, routing, logging, etc.)
-- ├── next.config.ts # Next.js configuration file
-- ├── package.json # Project dependencies & scripts
-- ├── package-lock.json # Lockfile for dependencies
-- ├── postcss.config.mjs # PostCSS configuration
+- AI-Trip-Planner/
+- ├── app/
+- ├── components/
+- ├── context/
+- ├── convex/
+- ├── hooks/
+- ├── lib/
+- ├── public/
+- ├── .gitignore
+- ├── README.md
+- ├── components.json
+- ├── middleware.ts
+- ├── next.config.ts
+- ├── package-lock.json
+- ├── package.json
+- ├── postcss.config.mjs
+- ├── tsconfig.json
+- ├── README.md
 
 ## 🚀 Deployment :->
 vercel :- https://ai-trip-planner-blush.vercel.app
