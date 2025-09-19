@@ -1,6 +1,6 @@
 # ✈️ AI Trip Planner
 
-An **AI-powered travel planning Full-Stack Saas application** built with **Next.js 14, Tailwind CSS, Clerk Authentication, and Mapbox**.  
+An **AI-powered Travel Planning Full-Stack Saas Application** built with **Next.js 14, Tailwind CSS, Clerk Authentication, and Mapbox**.  
 
 Create, visualize, and manage custom itineraries with an **AI assistant** and **interactive maps** — all in a **modern, responsive interface**.  
 
