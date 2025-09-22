@@ -25,10 +25,11 @@ Create, visualize, and manage custom itineraries with an **AI assistant** and **
 
 ## 🛠 Tech Stack :->
 
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)  
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)  
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Shadcn UI](https://ui.shadcn.com/)  
 - **Authentication**: [Clerk](https://clerk.com/)  
-- **Maps**: [Mapbox](https://mapbox.com/)  
+- **Maps**: [Mapbox](https://mapbox.com/)
+- **Real-time Reactive Database**: [Convex](https://www.convex.dev/)
 - **AI Integration**: OpenAI API (or other LLM provider)  
 - **Icons**: [Lucide React](https://lucide.dev/)  
 
